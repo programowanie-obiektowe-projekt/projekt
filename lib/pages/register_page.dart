@@ -5,7 +5,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_app/data/database.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  final DataBase db;
+  final Box myBox;
+
+  RegisterPage({Key? key, required this.db, required this.myBox}) : super(key: key);
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -14,14 +17,12 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
 
-  final _myBox = Hive.box('USERLIST');
-  DataBase db = DataBase();
   @override
   void initState() {
-    if (_myBox.get("USERLIST") == null) {
-      _myBox.put("USERLIST", []);
+    if (widget.myBox.get("USERLIST") == null) {
+      widget.myBox.put("USERLIST", []);
     } else {
-      db.loadData();
+      widget.db.loadData();
     }
   }
 
@@ -88,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 onPressed: () {
                   if (_passwordController.text == _confirmPasswordController.text){
-                    db.addUser(_passwordController.text, _passwordController.text);
+                    widget.db.addUser(_passwordController.text, _passwordController.text);
                     Navigator.pop(context);
                   }
                 },

@@ -5,28 +5,32 @@ class User {
   User({required this.username, required this.password});
 
   List ShoppingLists = [];
-  List ItemList = [];
-
-  void addShoppingList(String name){
-    ShoppingLists.add(name);
-  }
+  List<Item> ItemList = [];
 
   void addItem(String name, String quantity){
-    ItemList.add(Item(name: name, quantity: quantity));
+    Item item = Item(name: name, quantity: quantity);
+    ItemList.add(item);
   }
-
-  void deleteShoppingList(int index){
-    ShoppingLists.removeAt(index);
-  }
-
   void deleteItem(int index){
     ItemList.removeAt(index);
   }
+  void editItem(int index, String name, String quantity){
+    ItemList[index].name = name;
+    ItemList[index].quantity = quantity;
+  }
+  void clearItemList(){
+    ItemList.clear();
+  }
 
-  void editItem(int index, String newName, String newQuantity) {
-    Item item = ItemList[index];
-    item.name = newName;
-    item.quantity = newQuantity;
+  void addShoppingList(String name){
+    ShoppingList shoppingList = ShoppingList(name: name, items: ItemList);
+    ShoppingLists.add(shoppingList);
+  }
+  void deleteShoppingList(int index){
+    ShoppingLists.removeAt(index);
+  }
+  void editShoppingList(int index, String name){
+    ShoppingLists[index].name = name;
   }
 
 }
@@ -37,4 +41,12 @@ class Item {
   late final String quantity;
 
   Item({required this.name, required this.quantity});
+}
+
+class ShoppingList {
+
+  late final String name;
+  late final List<Item> items;
+
+  ShoppingList({required this.name, required this.items});
 }

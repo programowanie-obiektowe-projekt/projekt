@@ -4,6 +4,8 @@ import 'package:shopping_list_app/data/user.dart';
 
 class DataBase {
 
+  var currentUser;
+
   List userList = [];
 
   final _myBox = Hive.box("USERLIST");
@@ -25,6 +27,7 @@ class DataBase {
   int login(String username, String password){
     for (var user in userList){
       if (user.username == username && user.password == password){
+        currentUser = user;
         return 1;
       }
     }

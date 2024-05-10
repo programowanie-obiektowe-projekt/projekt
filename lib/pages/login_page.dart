@@ -5,7 +5,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_app/data/database.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final DataBase db;
+  final Box myBox;
+  const LoginPage({Key? key, required this.db, required this.myBox}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -14,14 +16,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  final _myBox = Hive.box('USERLIST');
-  DataBase db = DataBase();
   @override
   void initState() {
-    if (_myBox.get("USERLIST") == null) {
-      _myBox.put("USERLIST", []);
+    if (widget.myBox.get("USERLIST") == null) {
+      widget.myBox.put("USERLIST", []);
     } else {
-      db.loadData();
+      widget.db.loadData();
     }
   }
 
@@ -86,8 +86,8 @@ class _LoginPageState extends State<LoginPage> {
                     backgroundColor: MaterialTheme.lightScheme().secondaryContainer,
                   ),
                   onPressed: () {
-                    db.loadData();
-                    if (db.login(_usernameController.text, _passwordController.text) == 1){
+                    widget.db.loadData();
+                    if (widget.db.login(_usernameController.text, _passwordController.text) == 1){
                       Navigator.pushNamed(context, '/home');
                     } else {
                       showDialog(
