@@ -1,10 +1,11 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_list_app/data/user.dart';
 import 'package:shopping_list_app/data/user.dart';
+import 'package:shopping_list_app/main.dart';
 
 class DataBase {
 
-  var currentUser;
+  User? currentUser;
 
   List userList = [];
 

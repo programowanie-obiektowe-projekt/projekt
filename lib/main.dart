@@ -6,6 +6,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:shopping_list_app/pages/register_page.dart';
 import 'package:shopping_list_app/data/database.dart';
 import 'package:shopping_list_app/pages/home_page.dart';
+import 'package:shopping_list_app/data/user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
