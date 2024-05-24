@@ -1,11 +1,11 @@
-import 'package:shopping_list_app/data/user.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_list_app/themes/theme.dart';
+import 'package:shopping_list_app/data/user.dart';
 
 class ItemTile extends StatefulWidget {
   final Item item;
-  final onTap;
-  final deleteItem;
+  final Function deleteItem;
+  final Function onTap;
 
   ItemTile({required this.item, required this.onTap, required this.deleteItem});
 
@@ -15,8 +15,6 @@ class ItemTile extends StatefulWidget {
 
 class _ItemTileState extends State<ItemTile> {
   bool _isChecked = false;
-  TextEditingController _controllerName = TextEditingController();
-  TextEditingController _controllerQuantity = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +32,7 @@ class _ItemTileState extends State<ItemTile> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: ListTile(
-            onTap: widget.onTap,
+            onTap: () => widget.onTap(),
             leading: Checkbox(
               value: _isChecked,
               onChanged: (bool? value) {
@@ -43,24 +41,11 @@ class _ItemTileState extends State<ItemTile> {
                 });
               },
             ),
-            title: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: widget.item.name + "    ",
-                    style: TextStyle(
-                      color: _isChecked ? Colors.grey : MaterialTheme.lightScheme().onTertiaryContainer,
-                      decoration: _isChecked ? TextDecoration.lineThrough : TextDecoration.none,
-                    ),
-                  ),
-                  TextSpan(
-                    text: widget.item.quantity,
-                    style: TextStyle(
-                      color: _isChecked ? Colors.grey : MaterialTheme.lightScheme().onTertiaryContainer,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ],
+            title: Text(
+              widget.item.name + " (" + widget.item.quantity + ")",
+              style: TextStyle(
+                color: _isChecked ? Colors.grey : MaterialTheme.lightScheme().onTertiaryContainer,
+                decoration: _isChecked ? TextDecoration.lineThrough : TextDecoration.none,
               ),
             ),
             trailing: Row(
@@ -69,28 +54,31 @@ class _ItemTileState extends State<ItemTile> {
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
-                    _controllerName.text = widget.item.name;
-                    _controllerQuantity.text = widget.item.quantity;
+                    TextEditingController nameController = TextEditingController(text: widget.item.name);
+                    TextEditingController quantityController = TextEditingController(text: widget.item.quantity);
                     showDialog(
                       context: context,
-                      builder: (context) {
+                      builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Edit item's name and quantity"),
-                          content: Column(
-                            children: [
-                              TextField(
-                                controller: _controllerName,
-                                decoration: InputDecoration(
-                                  hintText: "Enter new name",
+                          title: const Text("Edit Item"),
+                          content: Container(
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            child: Column(
+                              children: [
+                                TextField(
+                                  decoration: const InputDecoration(
+                                    labelText: "Name",
+                                  ),
+                                  controller: nameController,
                                 ),
-                              ),
-                              TextField(
-                                controller: _controllerQuantity,
-                                decoration: InputDecoration(
-                                  hintText: "Enter new quantity",
+                                TextField(
+                                  decoration: const InputDecoration(
+                                    labelText: "Quantity",
+                                  ),
+                                  controller: quantityController,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           actions: [
                             Row(
@@ -98,17 +86,19 @@ class _ItemTileState extends State<ItemTile> {
                               children: [
                                 TextButton(
                                   onPressed: () {
-                                    Navigator.pop(context);
+                                    Navigator.of(context).pop();
                                   },
-                                  child: Text("Cancel"),
+                                  child: const Text("Cancel"),
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    widget.item.editItem(_controllerName.text, _controllerQuantity.text);
-                                    Navigator.pop(context);
-                                    setState(() {});
+                                    setState(() {
+                                      widget.item.name = nameController.text;
+                                      widget.item.quantity = quantityController.text;
+                                    });
+                                    Navigator.of(context).pop();
                                   },
-                                  child: Text("Save"),
+                                  child: const Text("Save"),
                                 ),
                               ],
                             ),
@@ -121,9 +111,7 @@ class _ItemTileState extends State<ItemTile> {
                 IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () {
-                    setState(() {
-                      widget.deleteItem;
-                    });
+                    widget.deleteItem();
                   },
                 ),
               ],

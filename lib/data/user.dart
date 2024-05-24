@@ -47,7 +47,6 @@ class ShoppingList {
 
   void deleteItem(int index){
     ItemList.removeAt(index);
-    print('dupa');
   }
 
 }
