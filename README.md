@@ -1,4 +1,4 @@
-# Cracking-Enigma - App for encrypting files
+# Shopping List App 
 
 ### ERD Diagram
 ``` mermaid
