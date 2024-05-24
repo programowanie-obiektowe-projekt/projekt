@@ -7,7 +7,8 @@ class User {
   List ShoppingLists = [];
 
   void addShoppingList(String name){
-    ShoppingList shoppingList = ShoppingList(name: name);
+    ShoppingList shoppingList = ShoppingList();
+    shoppingList.name = name;
     ShoppingLists.add(shoppingList);
   }
   void deleteShoppingList(int index){
@@ -17,17 +18,19 @@ class User {
 
 class Item {
 
-  late final String name;
-  late final String quantity;
+  String name = "";
+  String quantity = "";
 
-  Item({required this.name, required this.quantity});
+  void editItem(String name, String quantity){
+    this.name = name;
+    this.quantity = quantity;
+  }
+
 }
 
 class ShoppingList {
 
-  late final String name;
-
-  ShoppingList({required this.name});
+  String name = "";
 
   List ItemList = [];
 
@@ -36,16 +39,15 @@ class ShoppingList {
   }
 
   void addItem(String name, String quantity) {
-    Item item = Item(name: name, quantity: quantity);
+    Item item = Item();
+    item.name = name;
+    item.quantity = quantity;
     ItemList.add(item);
   }
 
   void deleteItem(int index){
     ItemList.removeAt(index);
+    print('dupa');
   }
 
-  void editItem(int index, String name, String quantity){
-    ItemList[index].name = name;
-    ItemList[index].quantity = quantity;
-  }
 }

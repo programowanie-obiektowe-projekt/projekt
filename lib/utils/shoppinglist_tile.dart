@@ -3,11 +3,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shopping_list_app/themes/theme.dart';
 import 'package:shopping_list_app/data/user.dart';
 
-class ShoppingListTile extends StatelessWidget {
+class ShoppingListTile extends StatefulWidget {
   final ShoppingList shoppingList;
+  final deleteShoppingList;
+  final onTap;
 
-  ShoppingListTile({required this.shoppingList});
+  ShoppingListTile({required this.shoppingList, required this.onTap, required this.deleteShoppingList});
 
+  @override
+  _ShoppingListTileState createState() => _ShoppingListTileState();
+}
+
+class _ShoppingListTileState extends State<ShoppingListTile> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -15,18 +22,19 @@ class ShoppingListTile extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: MaterialTheme.lightScheme().secondaryContainer),
+          border: Border.all(color: MaterialTheme.lightScheme().primaryContainer),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: MaterialTheme.lightScheme().secondaryContainer,
+            color: MaterialTheme.lightScheme().primaryContainer,
             borderRadius: BorderRadius.circular(10),
           ),
           child: ListTile(
+            onTap: widget.onTap,
             leading: FaIcon(FontAwesomeIcons.shoppingCart),
             title: Text(
-              shoppingList.name,
+              widget.shoppingList.name,
               style: TextStyle(color: MaterialTheme.lightScheme().onPrimaryContainer),
             ),
             trailing: Row(
@@ -35,7 +43,7 @@ class ShoppingListTile extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.edit),
                   onPressed: () {
-                    TextEditingController _controller = TextEditingController(text: shoppingList.name);
+                    TextEditingController _controller = TextEditingController(text: widget.shoppingList.name);
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -59,7 +67,9 @@ class ShoppingListTile extends StatelessWidget {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    shoppingList.editShoppingListName(_controller.text);
+                                    setState(() {
+                                      widget.shoppingList.editShoppingListName(_controller.text);
+                                    });
                                     Navigator.pop(context);
                                     (context as Element).markNeedsBuild();
                                   },
@@ -76,7 +86,9 @@ class ShoppingListTile extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () {
-                    // Tutaj umieszczamy logikę, co ma się stać po naciśnięciu przycisku
+                    setState(() {
+                      widget.deleteShoppingList();
+                    });
                   },
                 ),
               ],

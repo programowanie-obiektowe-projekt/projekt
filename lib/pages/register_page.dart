@@ -43,7 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
         backgroundColor: MaterialTheme.lightScheme().inversePrimary,
       ),
       body: Container(
-        color: MaterialTheme.lightScheme().primaryContainer,
+        color: Colors.black12,
         child: Center(
           child: Column(
             children: [
@@ -120,7 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 200),
+                        SizedBox(height: 100),
                         SizedBox(
                           width: 115,
                           height: 50,

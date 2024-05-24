@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: MaterialTheme.lightScheme().inversePrimary,
       ),
       body: Container(
-        color: MaterialTheme.lightScheme().primaryContainer,
+        color: Colors.black12,
         child: Center(
           child: Column(
             children: [
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 300,),
+                        SizedBox(height: 200,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
