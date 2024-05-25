@@ -1,30 +1,69 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:shopping_list_app/main.dart';
+import 'package:flutter/material.dart';
+import 'package:shopping_list_app/themes/theme.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  group('MaterialSchemeUtils', () {
+    test('toColorScheme should return correct ColorScheme', () {
+      final materialScheme = MaterialScheme(
+        brightness: Brightness.light,
+        primary: Colors.blue,
+        surfaceTint: Colors.blue,
+        onPrimary: Colors.white,
+        primaryContainer: Colors.blue,
+        onPrimaryContainer: Colors.white,
+        secondary: Colors.amber,
+        onSecondary: Colors.black,
+        secondaryContainer: Colors.amber,
+        onSecondaryContainer: Colors.black,
+        tertiary: Colors.green,
+        onTertiary: Colors.black,
+        tertiaryContainer: Colors.green,
+        onTertiaryContainer: Colors.black,
+        error: Colors.red,
+        onError: Colors.white,
+        errorContainer: Colors.red,
+        onErrorContainer: Colors.white,
+        background: Colors.white,
+        onBackground: Colors.black,
+        surface: Colors.white,
+        onSurface: Colors.black,
+        surfaceVariant: Colors.white,
+        onSurfaceVariant: Colors.black,
+        outline: Colors.black,
+        outlineVariant: Colors.black,
+        shadow: Colors.black,
+        scrim: Colors.black,
+        inverseSurface: Colors.black,
+        inverseOnSurface: Colors.white,
+        inversePrimary: Colors.black,
+        primaryFixed: Colors.blue,
+        onPrimaryFixed: Colors.white,
+        primaryFixedDim: Colors.blue,
+        onPrimaryFixedVariant: Colors.white,
+        secondaryFixed: Colors.amber,
+        onSecondaryFixed: Colors.black,
+        secondaryFixedDim: Colors.amber,
+        onSecondaryFixedVariant: Colors.black,
+        tertiaryFixed: Colors.green,
+        onTertiaryFixed: Colors.black,
+        tertiaryFixedDim: Colors.green,
+        onTertiaryFixedVariant: Colors.black,
+        surfaceDim: Colors.white,
+        surfaceBright: Colors.white,
+        surfaceContainerLowest: Colors.white,
+        surfaceContainerLow: Colors.white,
+        surfaceContainer: Colors.white,
+        surfaceContainerHigh: Colors.white,
+        surfaceContainerHighest: Colors.white,
+      );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      final colorScheme = materialScheme.toColorScheme();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      expect(colorScheme.brightness, Brightness.light);
+      expect(colorScheme.primary, Colors.blue);
+      expect(colorScheme.onPrimary, Colors.white);
+      // Add all other assertions
+    });
   });
 }
